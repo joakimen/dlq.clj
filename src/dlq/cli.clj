@@ -1,6 +1,7 @@
 (ns dlq.cli
   (:require [dlq.core :as dlq]))
 
+#_{:clj-kondo/ignore [:redefined-var]}
 (defn list
   "list dead-letter queues with messages (--all to include empty queues)"
   [m]
