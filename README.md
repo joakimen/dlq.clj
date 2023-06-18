@@ -1,5 +1,7 @@
 # dlq.clj
 
+[![lint](https://github.com/joakimen/dlq.clj/actions/workflows/lint.yml/badge.svg)](https://github.com/joakimen/dlq.clj/actions/workflows/lint.yml)
+
 Dealing with [Amazon SQS dead-letter-queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html) using [babashka](https://github.com/babashka/babashka).
 
 A dead-letter queue is as of now defined as "SQS queue whose name ends with `-dlq`", but I may change this when I find
