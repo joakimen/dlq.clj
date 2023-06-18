@@ -43,7 +43,7 @@ In order to run with different credentials, assume a different profile using som
 View commands
 
 ```sh
-❯ dlq
+$ dlq
 Usage: dlq <command>
 
   dlq list     list dead-letter queues with messages (--all to include empty queues)
