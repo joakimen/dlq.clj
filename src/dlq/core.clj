@@ -46,7 +46,7 @@
            (not all) (filter #(> (:messages %) 0)))
          (map (comp #(assoc % :url (queue-shortname (:url %)))
                     #(dissoc % :arn)))
-         (doric/table [:url :messages])
+         (doric/table [{:name :url :title "Queue"} :messages])
          println)))
 
 (defn redrive
