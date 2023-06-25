@@ -18,3 +18,20 @@
 (defn start-message-move-task [client source-queue-arn]
   (:TaskHandle (aws/invoke client {:op :StartMessageMoveTask
                                    :request {:SourceArn source-queue-arn}})))
+
+(defn receive-messages [client queue-url]
+  (let [messages (aws/invoke client {:op :ReceiveMessage
+                                     :request {:QueueUrl queue-url
+                                               :VisibilityTimeout 15
+                                               :WaitTimeSeconds 1
+                                               :MaxNumberOfMessages 10}})]
+    (when-not (empty? messages)
+      (:Messages messages))))
+
+
+(comment
+  (def sqs (client))
+  (-> (aws/ops sqs) keys sort)
+  (aws/doc sqs :ReceiveMessage)
+  ;;
+  )

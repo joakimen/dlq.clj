@@ -3,7 +3,8 @@
             [dlq.lib.sqs :as sqs]
             [doric.core :as doric]
             [fzf.core :refer [fzf]]
-            [cheshire.core :as json]))
+            [cheshire.core :as json]
+            [babashka.process :as p]))
 
 (defn- queue-shortname
   "extract the name-part of a sqs queue url or arn"
@@ -21,7 +22,8 @@
                          (doall))]
     (->> queue-attrs
          (map (fn [{:keys [QueueArn QueueUrl ApproximateNumberOfMessages]}]
-                {:arn QueueArn
+                {:name (queue-shortname QueueUrl)
+                 :arn QueueArn
                  :url QueueUrl
                  :messages (Integer/parseInt ApproximateNumberOfMessages)})))))
 
@@ -35,6 +37,15 @@
         selected-queue-arns (->> (fzf {:header {:header-str "Messages,Arn"} :multi true :in queue-strings})
                                  (map #(second (str/split % #","))))]
     (filter #(some #{(:arn %)} selected-queue-arns) queues)))
+
+(defn- receive-all-messages
+  "read all messages from a queue"
+  [sqs queue-url]
+  (let [messages (atom [])
+        received (atom [])]
+    (while (reset! received (sqs/receive-messages sqs queue-url))
+      (swap! messages concat @received))
+    @messages))
 
 (defn list-queues
   "list all non-empty dead-letter queues (url and messages)
@@ -69,3 +80,21 @@
                       (pmap #(assoc % :task-handle (sqs/start-message-move-task (sqs/client) (:arn %))))
                       (doall))]
       (println (json/generate-string (map #(dissoc % :messages) result) {:pretty true})))))
+
+(defn read-messages
+  [_]
+  (let [client (sqs/client)
+        queues (->> (get-queues-and-attributes client)
+                    (filter #(> (:messages %) 0))
+                    (map :url))
+        queue-url (fzf {:in queues})
+        messages (receive-all-messages client queue-url)]
+    (when-not (empty? messages)
+      (run! println (map :Body messages)))))
+
+(comment
+
+  (def client (sqs/client))
+  (def queues (get-queues-and-attributes client))
+;;
+  )
