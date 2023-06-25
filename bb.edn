@@ -1,3 +1,6 @@
 {:paths ["src"]
  :bbin/bin {dlq {:ns-default dlq.cli}}
- :deps {io.github.joakimen/dlq {:local/root "."}}}
+ :deps {io.github.joakimen/dlq {:local/root "."}}
+ :tasks {fmt (shell "cljfmt fix --parallel")
+         lint (shell "clj-kondo --lint . ---parallel")
+         all {:depends [fmt lint]}}}

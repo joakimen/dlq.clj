@@ -12,5 +12,6 @@
   (dlq/redrive m))
 
 (defn read-messages
-  "receive all messages from a queue and print :Body" [m]
+  "receive all messages from a queue and print :Body"
+  [m]
   (dlq/read-messages m))
