@@ -3,8 +3,7 @@
             [dlq.lib.sqs :as sqs]
             [doric.core :as doric]
             [fzf.core :refer [fzf]]
-            [cheshire.core :as json]
-            [babashka.process :as p]))
+            [cheshire.core :as json]))
 
 (defn- queue-shortname
   "extract the name-part of a sqs queue url or arn"
