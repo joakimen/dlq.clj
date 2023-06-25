@@ -28,7 +28,6 @@
     (when-not (empty? messages)
       (:Messages messages))))
 
-
 (comment
   (def sqs (client))
   (-> (aws/ops sqs) keys sort)
