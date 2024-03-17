@@ -44,7 +44,4 @@
   attres-jx
 
   (def queue-attrs (get-queue-attributes sqs (first queues)))
-  (clojure.pprint/pprint queue-attrs)
-
-  ;;
-  )
+  :rfc)

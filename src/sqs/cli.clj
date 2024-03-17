@@ -1,7 +1,7 @@
 (ns sqs.cli
   (:require [sqs.core :as sqs]))
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
+#_{:clj-kondo/ignore [:redefined-var]}
 (defn list
   "list all queues and their messages
    
