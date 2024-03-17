@@ -1,11 +1,8 @@
-# dlq.clj
+# sqs.clj
 
-[![lint](https://github.com/joakimen/dlq.clj/actions/workflows/lint.yml/badge.svg)](https://github.com/joakimen/dlq.clj/actions/workflows/lint.yml)
+[![lint](https://github.com/joakimen/sqs.clj/actions/workflows/lint.yml/badge.svg)](https://github.com/joakimen/sqs.clj/actions/workflows/lint.yml)
 
-Dealing with [Amazon SQS dead-letter-queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html) using [babashka](https://github.com/babashka/babashka).
-
-A dead-letter queue is as of now defined as "SQS queue whose name ends with `-dlq`", but I may change this when I find
-a better solution.
+Dealing with [Amazon SQS queues](https://aws.amazon.com/sqs/) using [babashka](https://github.com/babashka/babashka).
 
 ## Requirements
 
@@ -14,7 +11,7 @@ a better solution.
 
 ## Features
 
-- `list`: List dead-letter queues and their messages
+- `list`: List queues and their messages
 - `redrive`: Start a redrive-task from one or more DLQs to their origin queues
 
 ## Install
@@ -22,17 +19,17 @@ a better solution.
 Install using [bbin](https://github.com/babashka/bbin)
 
 ```sh
-$ bbin install io.github.joakimen/dlq.clj
+$ bbin install io.github.joakimen/sqs.clj
 {:coords
- {:git/url "https://github.com/joakimen/dlq.clj.git",
+ {:git/url "https://github.com/joakimen/sqs.clj.git",
   :git/sha "30778e70e6df96cfb7abbd098e774b6da29cce3c"},
- :lib io.github.joakimen/dlq.clj}
+ :lib io.github.joakimen/sqs.clj}
 
 ```
 
 ## AWS Credentials
 
-[dlq.clj](https://github.com/joakimen/dlq.clj) uses AWS credentials from the current shell session.
+[sqs.clj](https://github.com/joakimen/sqs.clj) uses AWS credentials from the current shell session.
 
 In order to run with different credentials, assume a different profile using something like [aws-vault](https://github.com/99designs/aws-vault)
 
@@ -43,19 +40,19 @@ In order to run with different credentials, assume a different profile using som
 View commands
 
 ```sh
-$ dlq
-Usage: dlq <command>
+$ sqs
+Usage: sqs <command>
 
-  dlq list     list dead-letter queues with messages (--all to include empty queues)
-  dlq redrive  select one or more queues to redrive messages from (--all to redrive all)
+  sqs list     queues with messages (--all to include empty queues)
+  sqs redrive  select one or more queues to redrive messages from (--all to redrive all)
 ```
 
 ### List
 
-List dead-letter queues and their messages
+List queues and their messages
 
 ```sh
-$ dlq list
+$ sqs list
 |---------------------------------+----------|
 |              Queue              | Messages |
 |---------------------------------+----------|
@@ -69,7 +66,7 @@ $ dlq list
 Redrive messages from one or more dead-letter queues in parallel and returns their task handles
 
 ```sh
-$ dlq redrive
+$ sqs redrive
 
 # .. user selects one or more queues using fzf
 

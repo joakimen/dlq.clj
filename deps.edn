@@ -5,5 +5,6 @@
                              :git/tag "v0.8.41"}
         org.babashka/spec.alpha {:git/url "https://github.com/babashka/spec.alpha"
                                  :git/sha "8df0712896f596680da7a32ae44bb000b7e45e68"}
-        doric/doric {:mvn/version "0.9.0"}
-        io.github.joakimen/fzf.clj {:git/sha "f4e85a018b2ecdc0d509e6a606025529774adad8"}}}
+        com.joshuadavey/crockery {:mvn/version "0.3.0"}
+        io.github.joakimen/fzf.clj {:git/sha "f4e85a018b2ecdc0d509e6a606025529774adad8"}
+        djblue/portal {:mvn/version "0.49.0"}}}
